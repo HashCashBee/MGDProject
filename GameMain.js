@@ -1,5 +1,5 @@
 var tileSet,
-    TILE_SIZE = 16,
+    TILE_SIZE = 32,
     NUM_ROWS = 30,
     NUM_COLS = 40;
 
@@ -34,7 +34,7 @@ TileSet.prototype.draw = function(context){
 window.onload = function(){
     context = document.getElementById("canvas").getContext("2d");
     tileSet = new TileSet(NUM_ROWS, NUM_COLS, TILE_SIZE);
-    tileSet.load("images/tileset.png", function(){
+    tileSet.load("images/sheep_tileset.png", function(){
         tileSet.draw(context);
     });
 };
