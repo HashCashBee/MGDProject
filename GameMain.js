@@ -1,7 +1,27 @@
-var tileSet,
+var context, tileSet,
     TILE_SIZE = 32,
     NUM_ROWS = 30,
-    NUM_COLS = 40;
+    NUM_COLS = 40, sheep, wolf;
+
+function Player(x, y){
+    this.x = x;
+    this.y = y;
+}
+
+Player.prototype.load = function(img_file){
+    this.image = new Image();
+    this.image.src = img_file;
+};
+
+Player.prototype.draw = function(context){
+    context.drawImage(this.image, 0, 0, 32, 32, this.x * 32 + 16, this.y * 32 +16, 32, 32);
+};
+
+Player.prototype.moveBy = function(dx, dy){
+    this.x += dx;
+    this.y += dy;
+};
+
 
 function TileSet(rows, cols, size){
     this.tilesize = size;
@@ -9,7 +29,7 @@ function TileSet(rows, cols, size){
     this.cols = cols;
 }
 
-TileSet.prototype.load = function(image_file, callback){
+TileSet.prototype.loadTiles = function(image_file, callback){
     this.image = new Image();
     this.image.src = image_file;
     this.image.onload = function () {
@@ -33,8 +53,30 @@ TileSet.prototype.draw = function(context){
 
 window.onload = function(){
     context = document.getElementById("canvas").getContext("2d");
-    tileSet = new TileSet(NUM_ROWS, NUM_COLS, TILE_SIZE);
-    tileSet.load("images/sheep_tileset.png", function(){
-        tileSet.draw(context);
-    });
+    LoadAssets();
 };
+
+function LoadAssets(){
+    tileSet = new TileSet(NUM_ROWS, NUM_COLS, TILE_SIZE);
+    sheep = new Player(13, 5);
+    wolf = new Player(20, 20);
+    sheep.load("images/sheep-sprite.png");
+    wolf.load("images/wolf-sprite.png");
+    tileSet.loadTiles("images/sheep_tileset.png", gameLoop);
+}
+
+function drawPlayers(context){
+    sheep.draw(context);
+    wolf.draw(context);
+}
+
+function gameLoop(){
+    tileSet.draw(context);
+    drawPlayers(context);
+    requestAnimationFrame(gameLoop);
+}
+
+
+
+
+
