@@ -1,10 +1,11 @@
 /**
  * Created by hsah on 21/04/2016.
  */
-function Player(x, y, playable){
+function Player(x, y, name){
     this.x = x;
     this.y = y;
-    this.playable = playable;
+    this.name = name;
+
 }
 
 Player.prototype.load = function(img_file){
@@ -13,7 +14,7 @@ Player.prototype.load = function(img_file){
 };
 
 Player.prototype.update = function(){
-    if(this.playable) {
+    if(this.name == "Sheep") {
         if (Key.isDown(Key.UP)) this.moveBy(0, -1);
         if (Key.isDown(Key.LEFT)) this.moveBy(-1, 0);
         if (Key.isDown(Key.RIGHT)) this.moveBy(1, 0);
@@ -30,4 +31,8 @@ Player.prototype.moveBy = function(dx, dy){
         this.x += dx;
         this.y += dy;
     }
+    if(!getKey(this.name))
+        addLocation(this.name, this.x, this.y);
+    else
+        updateLocation(getKey(this.name),this.name, this.x, this.y);
 };
