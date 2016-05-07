@@ -173,7 +173,7 @@ document.getElementById("join").addEventListener("click", function(){
         updateLocation(playerType, '0', player.x, player.y, true);
     }
     else {
-        console.log("Can't join, gtfo");
+        alert("Can't join! Game is full!")
     }
     LoadAssets();
 });
